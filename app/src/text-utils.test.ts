@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseTags, slugify, truncate } from "./text-utils.js";
+import { capitalizeWords, parseTags, slugify, truncate } from "./text-utils.js";
 
 describe("slugify", () => {
   it("lowercases and hyphenates a plain title", () => {
@@ -18,6 +18,32 @@ describe("parseTags", () => {
 
   it("returns an empty array for blank input", () => {
     expect(parseTags("   ")).toEqual([]);
+  });
+});
+
+describe("capitalizeWords", () => {
+  it("title-cases words that arrive in arbitrary case", () => {
+    expect(capitalizeWords("WIRELESS mouse")).toBe("Wireless Mouse");
+  });
+
+  it("preserves multiple spaces between words", () => {
+    expect(capitalizeWords("red   t-shirt")).toBe("Red   T-shirt");
+  });
+
+  it("preserves leading and trailing spaces", () => {
+    expect(capitalizeWords("  hello world  ")).toBe("  Hello World  ");
+  });
+
+  it("returns an empty string unchanged", () => {
+    expect(capitalizeWords("")).toBe("");
+  });
+
+  it("returns a whitespace-only string unchanged", () => {
+    expect(capitalizeWords("   ")).toBe("   ");
+  });
+
+  it("keeps already title-cased input stable", () => {
+    expect(capitalizeWords("already Title Case")).toBe("Already Title Case");
   });
 });
 
