@@ -24,6 +24,13 @@ export function truncate(input: string, maxLength: number, suffix = "..."): stri
   return input.slice(0, maxLength - suffix.length) + suffix;
 }
 
+export function capitalizeWords(input: string): string {
+  return input.replace(
+    /\S+/g,
+    (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+  );
+}
+
 export function parseTags(input: string): string[] {
   const tags = input
     .split(/[,#]/)
